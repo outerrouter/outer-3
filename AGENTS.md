@@ -72,6 +72,15 @@ Secrets are encrypted at rest.
 - Security headers and CSP are set in the `security_headers` middleware — update the CSP if
   you add external resources.
 
+## Version control
+
+- Remote: `https://github.com/outerrouter/outer-3` (private-by-convention; the only repo this
+  token can push to). Default branch is `main`.
+- Push uses `GITHUB_PERSONAL_ACCESS_TOKEN` in the remote URL — the MCP `GITHUB_TOKEN` can create
+  files via the API but is **denied for git push** and for `POST /pulls`. Use the personal token
+  for pushes and PR creation.
+- Never commit `data/` (encrypted DB + `master.key`); it is in `.gitignore`. Keep it that way.
+
 ## Gotchas
 - The MCP manager needs its background loop started (`mcp_manager.start()`, done in the
   FastAPI lifespan). Don't call MCP sync wrappers before startup.
