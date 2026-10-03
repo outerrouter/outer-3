@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0b0f17" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>Agent Control Assistant</title>
+<link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+
+<!-- ============ LOCK SCREEN ============ -->
+<div id="lock" class="lock">
+  <div class="lock-card">
+    <div class="lock-icon">🔒</div>
+    <h1>Agent Control Assistant</h1>
+    <p class="muted">Personal &amp; private. Enter your password to unlock.</p>
+    <form id="lock-form" autocomplete="off">
+      <input id="lock-password" type="password" placeholder="Password" autofocus />
+      <button type="submit">Unlock</button>
+    </form>
+    <div id="lock-error" class="error"></div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="app hidden">
+  <aside id="sidebar" class="sidebar">
+    <div class="side-head">
+      <div class="brand"><span class="dot"></span> Agent Control</div>
+      <button id="sidebar-close" class="icon-btn" aria-label="Close menu">✕</button>
+    </div>
+    <button id="new-chat" class="btn primary block">＋ New chat</button>
+    <div class="side-section">
+      <div class="side-title">Chats</div>
+      <div id="sessions" class="sessions"></div>
+    </div>
+    <div class="side-section grow">
+      <div class="side-title">Control</div>
+      <button class="nav" data-panel="layers"><span>🗂️</span> System layers</button>
+      <button class="nav" data-panel="memory"><span>🧠</span> Memory</button>
+      <button class="nav" data-panel="settings"><span>⚙️</span> AI Model &amp; API</button>
+      <button class="nav" data-panel="mcp"><span>🔌</span> MCP servers</button>
+      <button class="nav" data-panel="appmcp"><span>🛰️</span> App MCP (external)</button>
+      <button class="nav" data-panel="security"><span>🛡️</span> Security scanner</button>
+    </div>
+    <div class="side-foot">
+      <div id="llm-badge" class="badge">checking…</div>
+      <div id="rate-badge" class="badge small">–</div>
+      <button id="logout" class="btn ghost block">Lock</button>
+    </div>
+  </aside>
+  <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="menu-btn" class="icon-btn" aria-label="Menu">☰</button>
+      <div class="topbar-center">
+        <div class="topbar-title">Chat</div>
+        <div id="session-label" class="muted small">default</div>
+      </div>
+      <div class="topbar-actions">
+        <button id="control-btn" class="icon-btn" aria-label="Control panels">⚙️</button>
+        <button id="clear-chat" class="btn ghost small">Clear</button>
+      </div>
+    </header>
+
+    <div id="messages" class="messages">
+      <div class="empty-state">
+        <div class="empty-icon">👋</div>
+        <h2>Your private AI agent</h2>
+        <p class="muted">Paste an API key, a link, a code snippet, or an MCP config. I'll check it
+          step by step and save it only when you ask.</p>
+        <div class="chips">
+          <button class="chip" data-fill="Check this API key and tell me if it works: sk-...">🔑 Check a key</button>
+          <button class="chip" data-fill="Check this link and tell me if it is reachable: https://">🔗 Check a link</button>
+          <button class="chip" data-fill="Scan this code for secrets and dangers:&#10;&#10;">🧪 Scan code</button>
+          <button class="chip" data-fill="Connect an MCP server named 'filesystem' using stdio command npx with args -y @modelcontextprotocol/server-filesystem /tmp">🔌 Add MCP</button>
+          <button class="chip" data-fill="Show me the system layers and how many items each holds.">🗂️ Show layers</button>
+          <button class="chip" data-fill="Give me a full health report of the system.">🩺 Health report</button>
+          <button class="chip" data-fill="Find the best working model on my provider and set it.">✨ Best model</button>
+        </div>
+      </div>
+    </div>
+
+    <button id="scroll-down" class="scroll-down hidden" aria-label="Scroll to latest">↓</button>
+
+    <form id="composer" class="composer">
+      <textarea id="input" rows="1" placeholder="Message your agent…" enterkeyhint="send"></textarea>
+      <button type="submit" class="btn primary send-btn" aria-label="Send">➤</button>
+    </form>
+    <div id="toast" class="toast hidden"></div>
+  </main>
+</div>
+
+<!-- ============ PANEL DRAWER ============ -->
+<div id="drawer" class="drawer hidden">
+  <div class="drawer-backdrop" data-close></div>
+  <div class="drawer-body">
+    <div class="drawer-head">
+      <h2 id="drawer-title">Panel</h2>
+      <button class="icon-btn" data-close aria-label="Close">✕</button>
+    </div>
+    <div id="drawer-content" class="drawer-content"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>

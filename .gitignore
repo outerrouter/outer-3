@@ -1,0 +1,16 @@
+# Runtime data (encrypted secrets, database, master key) — never commit.
+data/
+*.db
+*.db-wal
+*.db-shm
+master.key
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
